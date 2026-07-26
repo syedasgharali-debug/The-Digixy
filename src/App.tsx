@@ -126,18 +126,26 @@ const Navbar = ({ onOpenModal }: { onOpenModal: () => void }) => {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full bg-brand-white border-t border-brand-black/5 shadow-2xl md:hidden"
           >
-            <div className="p-10 flex flex-col space-y-8">
+            <div className="p-10 flex flex-col space-y-6">
               {['Services', 'About', 'Work', 'Blog', 'Contact'].map((item) => (
-                <button 
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    onOpenModal();
-                  }}
-                  className="text-4xl font-display font-black tracking-tighter hover:text-brand-accent transition-colors text-left"
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase()}`} 
+                  className="text-3xl font-display font-black tracking-tighter hover:text-brand-accent transition-colors text-left text-brand-black block"
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  Start Project
-                </button>
+                  {item}
+                </a>
               ))}
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onOpenModal();
+                }}
+                className="w-full py-4 mt-4 bg-brand-black text-brand-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-brand-accent transition-all text-center"
+              >
+                Start a Project
+              </button>
             </div>
           </motion.div>
         )}
@@ -152,9 +160,127 @@ const Marquee = () => {
       <div className="inline-block animate-marquee">
         {[...Array(10)].map((_, i) => (
           <span key={i} className="text-brand-white/20 text-sm font-bold uppercase tracking-[0.5em] mx-12">
-            London • New York • Dubai • Singapore • Manchester • Tokyo • Berlin
+            MINNEAPOLIS • NEW YORK • TORONTO • LONDON • SYDNEY • DUBAI • SINGAPORE
           </span>
         ))}
+      </div>
+    </div>
+  );
+};
+
+const GlobalTrustBadges = () => {
+  return (
+    <div className="flex flex-wrap gap-2.5 mb-6">
+      <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
+        <span className="flex space-x-0.5 items-center">
+          <span className="w-1.5 h-3 bg-[#0A3161] rounded-l-sm" />
+          <span className="w-1 h-3 bg-white" />
+          <span className="w-1.5 h-3 bg-[#B31942] rounded-r-sm" />
+        </span>
+        <span>USA HQ</span>
+      </span>
+      <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
+        <span className="flex space-x-0.5 items-center">
+          <span className="w-1.5 h-3 bg-[#FF0000] rounded-l-sm" />
+          <span className="w-1 h-3 bg-white" />
+          <span className="w-1.5 h-3 bg-[#FF0000] rounded-r-sm" />
+        </span>
+        <span>Canada Hub</span>
+      </span>
+      <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
+        <span className="flex space-x-0.5 items-center">
+          <span className="w-1.5 h-3 bg-[#00247D] rounded-l-sm" />
+          <span className="w-1.5 h-3 bg-white" />
+          <span className="w-1.5 h-3 bg-[#CF142B] rounded-r-sm" />
+        </span>
+        <span>United Kingdom Hub</span>
+      </span>
+      <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
+        <span className="flex space-x-0.5 items-center">
+          <span className="w-1.5 h-3 bg-[#00008B] rounded-l-sm" />
+          <span className="w-1.5 h-3 bg-[#FFD700] rounded-r-sm" />
+        </span>
+        <span>Australia Hub</span>
+      </span>
+    </div>
+  );
+};
+
+const GlobalClocks = () => {
+  const [times, setTimes] = useState({
+    minneapolis: '',
+    toronto: '',
+    london: '',
+    sydney: '',
+  });
+
+  useEffect(() => {
+    const updateClocks = () => {
+      try {
+        const options = (timeZone: string) => ({
+          timeZone,
+          hour: '2-digit' as const,
+          minute: '2-digit' as const,
+          second: '2-digit' as const,
+          hour12: true,
+        });
+        const formatter = (tz: string) => new Intl.DateTimeFormat('en-US', options(tz)).format(new Date());
+
+        setTimes({
+          minneapolis: formatter('America/Chicago'),
+          toronto: formatter('America/Toronto'),
+          london: formatter('Europe/London'),
+          sydney: formatter('Australia/Sydney'),
+        });
+      } catch (e) {
+        setTimes({
+          minneapolis: '05:38:14 PM',
+          toronto: '06:38:14 PM',
+          london: '11:38:14 PM',
+          sydney: '08:38:14 AM',
+        });
+      }
+    };
+
+    updateClocks();
+    const interval = setInterval(updateClocks, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-brand-black text-brand-beige rounded-[2rem] border border-brand-white/10 shadow-2xl mb-10 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none" />
+      
+      <div className="flex flex-col">
+        <div className="flex items-center space-x-2 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B31942] animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">Minneapolis, CST</span>
+        </div>
+        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.minneapolis || '05:38 PM'}</span>
+      </div>
+
+      <div className="flex flex-col border-t md:border-t-0 md:border-l border-brand-white/10 pt-4 md:pt-0 md:pl-6">
+        <div className="flex items-center space-x-2 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF0000] animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">Toronto, EST</span>
+        </div>
+        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.toronto || '06:38 PM'}</span>
+      </div>
+
+      <div className="flex flex-col border-t md:border-t-0 md:border-l border-brand-white/10 pt-4 md:pt-0 md:pl-6">
+        <div className="flex items-center space-x-2 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#CF142B] animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">London, BST</span>
+        </div>
+        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.london || '11:38 PM'}</span>
+      </div>
+
+      <div className="flex flex-col border-t md:border-t-0 md:border-l border-brand-white/10 pt-4 md:pt-0 md:pl-6">
+        <div className="flex items-center space-x-2 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">Sydney, AEST</span>
+        </div>
+        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.sydney || '08:38 AM'}</span>
       </div>
     </div>
   );
@@ -177,7 +303,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex items-center space-x-4 mb-10"
+              className="flex items-center space-x-4 mb-8"
             >
               <div className="h-[1px] w-12 bg-brand-accent" />
               <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-black/50">
@@ -185,7 +311,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </span>
             </motion.div>
 
-            <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-display font-black tracking-tight leading-[0.9] uppercase mb-12 text-brand-black">
+            <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-display font-black tracking-tight leading-[0.9] uppercase mb-10 text-brand-black">
               <div className="overflow-hidden">
                 <motion.span 
                   initial={{ y: "110%" }}
@@ -223,10 +349,19 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
-                className="text-lg md:text-xl text-brand-black/60 font-light leading-relaxed mb-12 border-l-2 border-brand-accent/20 pl-8"
+                className="text-lg md:text-xl text-brand-black/60 font-light leading-relaxed mb-8 border-l-2 border-brand-accent/20 pl-8"
               >
                 We deliver high-frequency software ecosystems for enterprise market leaders. Our systems are engineered for infinite scale, absolute security, and architectural permanence.
               </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                <GlobalTrustBadges />
+                <GlobalClocks />
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -327,11 +462,11 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
 const Manifesto = () => {
   return (
-    <section className="py-24 bg-brand-white overflow-hidden">
+    <section className="py-16 md:py-20 bg-brand-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           <div className="lg:col-span-7">
-            <h2 className="text-5xl md:text-8xl font-display font-black tracking-tighter mb-16 leading-[0.85]">
+            <h2 className="text-5xl md:text-8xl font-display font-black tracking-tighter mb-10 md:mb-12 leading-[0.85]">
               CRAFTED BY <br />
               <span className="italic font-serif font-normal text-brand-accent">Engineers</span>, <br />
               DRIVEN BY <br />
@@ -405,9 +540,9 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-brand-white relative overflow-hidden">
+    <section id="services" className="py-16 md:py-20 bg-brand-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col mb-32">
+        <div className="flex flex-col mb-12 md:mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -500,9 +635,9 @@ const Work = () => {
   const displayedProjects = showAll ? allProjects : allProjects.slice(0, 2);
 
   return (
-    <section id="work" className="py-24 bg-brand-beige">
+    <section id="work" className="py-16 md:py-20 bg-brand-beige">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-8">
           <h2 className="text-6xl md:text-9xl font-display font-bold tracking-tighter leading-[0.8]">SELECTED <br />WORK.</h2>
           <motion.div
             initial={{ opacity: 0 }}
@@ -555,7 +690,7 @@ const Work = () => {
           </AnimatePresence>
         </div>
 
-        <div className="mt-32 flex justify-center">
+        <div className="mt-12 md:mt-16 flex justify-center">
           <motion.button
             onClick={() => setShowAll(!showAll)}
             whileHover={{ scale: 1.02 }}
@@ -581,12 +716,12 @@ const Work = () => {
 
 const Philosophy = () => {
   return (
-    <section id="about" className="py-24 bg-brand-black text-brand-white relative overflow-hidden">
+    <section id="about" className="py-16 md:py-20 bg-brand-black text-brand-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <div>
-            <span className="text-[11px] font-black uppercase tracking-[0.6em] text-brand-accent mb-12 block underline underline-offset-[12px] decoration-2">THE ARCHITECTURE</span>
-            <h2 className="text-[clamp(4rem,10vw,12rem)] font-display font-black leading-[0.8] mb-16 tracking-tighter uppercase">
+            <span className="text-[11px] font-black uppercase tracking-[0.6em] text-brand-accent mb-6 md:mb-8 block underline underline-offset-[12px] decoration-2">THE ARCHITECTURE</span>
+            <h2 className="text-[clamp(4rem,10vw,12rem)] font-display font-black leading-[0.8] mb-8 md:mb-10 tracking-tighter uppercase">
               PURE <br />
               <span className="italic font-serif font-normal text-brand-accent lowercase tracking-normal">Class.</span> <br />
               Total <br />
@@ -658,9 +793,9 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-24 bg-brand-white relative overflow-hidden">
+    <section id="testimonials" className="py-16 md:py-20 bg-brand-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-24">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16">
           <div className="max-w-2xl">
             <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-brand-accent mb-6 block">Trusted by Leaders</span>
             <h2 className="text-6xl md:text-8xl font-display font-bold leading-[0.9] tracking-tighter">
@@ -717,20 +852,20 @@ const Testimonials = () => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 md:py-40 bg-brand-beige">
+    <section id="contact" className="py-12 md:py-24 bg-brand-beige">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="bg-brand-white rounded-[32px] md:rounded-[60px] p-8 md:p-24 shadow-2xl shadow-brand-black/5 border border-brand-black/5">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+        <div className="bg-brand-white rounded-[32px] md:rounded-[60px] p-6 md:p-16 shadow-2xl shadow-brand-black/5 border border-brand-black/5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
             <div>
-              <h2 className="text-5xl md:text-8xl font-display font-bold mb-10 md:mb-16 tracking-tighter leading-[0.9]">LET'S <br />TALK <span className="text-brand-accent italic font-serif font-normal">GROWTH</span>.</h2>
+              <h2 className="text-5xl md:text-8xl font-display font-bold mb-6 md:mb-10 tracking-tighter leading-[0.9]">LET'S <br />TALK <span className="text-brand-accent italic font-serif font-normal">GROWTH</span>.</h2>
               
-              <div className="space-y-8 md:space-y-12">
+              <div className="space-y-6 md:space-y-8">
                 <div className="group flex items-start space-x-4 md:space-x-8">
                   <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-brand-beige flex items-center justify-center flex-shrink-0 group-hover:bg-brand-accent group-hover:text-brand-white transition-all duration-500">
                     <Mail className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black text-brand-black/30 mb-1 md:mb-2">Email us</p>
+                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black text-brand-black/30 mb-1">Email us</p>
                     <a href="mailto:hello@thedigixy.com" className="text-lg md:text-2xl font-bold hover:text-brand-accent transition-colors break-all">hello@thedigixy.com</a>
                   </div>
                 </div>
@@ -740,8 +875,9 @@ const Contact = () => {
                     <Phone className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black text-brand-black/30 mb-1 md:mb-2">Call us</p>
-                    <a href="tel:+447999564387" className="text-lg md:text-2xl font-bold hover:text-brand-accent transition-colors">+44 7999 564387</a>
+                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black text-brand-black/30 mb-1">Direct Line & Queries</p>
+                    <a href="tel:+15072583835" className="text-lg md:text-2xl font-bold hover:text-brand-accent transition-colors block">+1 (507) 258-3835</a>
+                    <p className="text-xs text-brand-black/40 font-medium mt-1">Available 9:00 AM – 5:00 PM (USA EST Time)</p>
                   </div>
                 </div>
 
@@ -750,8 +886,8 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black text-brand-black/30 mb-1 md:mb-2">Visit us</p>
-                    <p className="text-lg md:text-2xl font-bold">372 Old Street, London EC1V 9LT</p>
+                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-black text-brand-black/30 mb-1">US Office Hub</p>
+                    <p className="text-lg md:text-2xl font-bold">100 South 5th St, Suite 1900, Minneapolis, MN 55402</p>
                   </div>
                 </div>
               </div>
@@ -795,7 +931,7 @@ const Contact = () => {
 
 const PreFooter = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
-    <section className="py-24 bg-brand-black text-brand-white relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-brand-black text-brand-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
         <motion.div
            initial={{ opacity: 0, y: 50 }}
@@ -824,31 +960,52 @@ const PreFooter = ({ onOpenModal }: { onOpenModal: () => void }) => {
 };
 
 const ProjectModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [selectedRegion, setSelectedRegion] = useState<'US' | 'CA' | 'UK' | 'AU'>('US');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const regionDetails = {
+    US: { name: 'United States', hub: 'New York (EST)', indicator: 'Fast-Track US Enterprise Routing' },
+    CA: { name: 'Canada', hub: 'Toronto (EST)', indicator: 'CA Sovereign Standard Routing' },
+    UK: { name: 'United Kingdom', hub: 'London (BST)', indicator: 'UK Tech & GDPR Aligned Routing' },
+    AU: { name: 'Australia', hub: 'Sydney (AEST)', indicator: 'APAC & AU Privacy Act Routing' },
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
+  const resetModal = () => {
+    setIsSubmitted(false);
+    onClose();
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-6">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={resetModal}
             className="absolute inset-0 bg-brand-black/90 backdrop-blur-md"
           />
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-4xl bg-brand-beige rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-brand-black/5"
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-4xl bg-brand-beige rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-brand-black/5 z-10"
           >
             <button 
-              onClick={onClose}
-              className="absolute top-8 right-8 p-3 bg-brand-black text-brand-white rounded-full hover:bg-brand-accent transition-colors z-20"
+              onClick={resetModal}
+              className="absolute top-6 right-6 md:top-8 md:right-8 p-3 bg-brand-black text-brand-white rounded-full hover:bg-brand-accent transition-colors z-20"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
 
             <div className="grid grid-cols-1 lg:grid-cols-2">
+              {/* Left Column: Context Card */}
               <div className="hidden lg:block bg-brand-black p-16 text-brand-white relative overflow-hidden">
                 <div className="relative z-10 h-full flex flex-col justify-between">
                   <div>
@@ -859,12 +1016,21 @@ const ProjectModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
                       of Scale.
                     </h3>
                     <p className="text-brand-white/40 text-sm font-light leading-relaxed max-w-xs">
-                      Tell us about your architectural vision. We specialize in high-frequency engineering for market leaders.
+                      Tell us about your architectural vision. We specialize in high-frequency engineering for market leaders across global zones.
                     </p>
                   </div>
-                  <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-brand-accent">
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
-                    <span>Secure Transmission Active</span>
+                  
+                  <div className="space-y-4">
+                    <div className="p-4 bg-brand-white/5 rounded-xl border border-brand-white/10">
+                      <div className="text-[9px] font-black uppercase tracking-widest text-brand-accent mb-1">Active Hub Priority</div>
+                      <div className="text-xs font-bold text-brand-white">{regionDetails[selectedRegion].name} — {regionDetails[selectedRegion].hub}</div>
+                      <div className="text-[9px] text-brand-white/40 mt-1">{regionDetails[selectedRegion].indicator}</div>
+                    </div>
+
+                    <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-brand-accent">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+                      <span>Secure Transmission Active</span>
+                    </div>
                   </div>
                 </div>
                 <div className="absolute -bottom-20 -left-20 text-[20rem] font-black text-brand-white/[0.03] select-none pointer-events-none italic">
@@ -872,35 +1038,130 @@ const ProjectModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
                 </div>
               </div>
 
-              <div className="p-8 md:p-16 max-h-[90vh] overflow-y-auto">
-                <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); alert('Inquiry Transmitted.'); onClose(); }}>
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/30">Client Identity</label>
-                      <input required type="text" placeholder="Full Name / Company" className="w-full bg-brand-black/5 border-none rounded-2xl p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all font-medium text-sm" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/30">Communication Line</label>
-                      <input required type="email" placeholder="Email Address" className="w-full bg-brand-black/5 border-none rounded-2xl p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all font-medium text-sm" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/30">Target Vector</label>
-                      <select required className="w-full bg-brand-black/5 border-none rounded-2xl p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all appearance-none font-medium text-sm">
-                        <option>Software Ecosystems</option>
-                        <option>White Label SaaS</option>
-                        <option>Global SEO Dominance</option>
-                        <option>Digital Infrastructure</option>
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/30">Architectural Brief</label>
-                      <textarea required rows={4} placeholder="Summarize your vision..." className="w-full bg-brand-black/5 border-none rounded-2xl p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all resize-none font-medium text-sm" />
-                    </div>
-                  </div>
-                  <button className="w-full py-5 bg-brand-black text-brand-white rounded-2xl font-black uppercase tracking-[0.4em] text-[10px] hover:bg-brand-accent transition-all shadow-2xl shadow-brand-black/10 hover:scale-[1.02] active:scale-[0.98]">
-                    Initiate Connection
-                  </button>
-                </form>
+              {/* Right Column: Interactive Form / Success screen */}
+              <div className="p-6 md:p-12 lg:p-16 max-h-[85vh] lg:max-h-[90vh] overflow-y-auto">
+                <AnimatePresence mode="wait">
+                  {!isSubmitted ? (
+                    <motion.div
+                      key="form-view"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                    >
+                      <div className="mb-8">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-brand-accent mb-2 block">PROJECT REGISTRY</span>
+                        <h4 className="text-2xl md:text-3xl font-display font-black text-brand-black leading-tight uppercase">Initiate Connection</h4>
+                      </div>
+
+                      <form className="space-y-6" onSubmit={handleFormSubmit}>
+                        {/* Interactive Region Selector */}
+                        <div className="space-y-3">
+                          <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/40">Select Your Region</label>
+                          <div className="grid grid-cols-4 gap-2">
+                            {(['US', 'CA', 'UK', 'AU'] as const).map((reg) => (
+                              <button
+                                key={reg}
+                                type="button"
+                                onClick={() => setSelectedRegion(reg)}
+                                className={`py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all ${
+                                  selectedRegion === reg
+                                    ? 'bg-brand-black text-brand-white shadow-lg shadow-brand-black/10'
+                                    : 'bg-brand-black/5 text-brand-black/50 hover:bg-brand-black/10'
+                                }`}
+                              >
+                                {reg}
+                              </button>
+                            ))}
+                          </div>
+                          <div className="text-[10px] text-brand-black/40 italic flex items-center space-x-1.5 pt-1">
+                            <span className="w-1 h-1 rounded-full bg-green-500" />
+                            <span>Routing to closest physical endpoint: {regionDetails[selectedRegion].hub}</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-5">
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/40">Client Identity</label>
+                            <input required type="text" placeholder="Full Name / Company Name" className="w-full bg-brand-black/5 border-none rounded-2xl p-4 md:p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all font-medium text-sm text-brand-black" />
+                          </div>
+                          
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/40">Communication Line</label>
+                            <input required type="email" placeholder="email@address.com" className="w-full bg-brand-black/5 border-none rounded-2xl p-4 md:p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all font-medium text-sm text-brand-black" />
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/40">Target Vector</label>
+                            <select required className="w-full bg-brand-black/5 border-none rounded-2xl p-4 md:p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all appearance-none font-medium text-sm text-brand-black">
+                              <option>Software Ecosystems</option>
+                              <option>White Label SaaS Solutions</option>
+                              <option>Global SEO Dominance</option>
+                              <option>Digital Infrastructure</option>
+                            </select>
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-brand-black/40">Architectural Brief</label>
+                            <textarea required rows={3} placeholder="Provide a high-level summary of your project vision..." className="w-full bg-brand-black/5 border-none rounded-2xl p-4 md:p-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all resize-none font-medium text-sm text-brand-black" />
+                          </div>
+                        </div>
+
+                        <button className="w-full py-5 bg-brand-black text-brand-white rounded-2xl font-black uppercase tracking-[0.4em] text-[10px] hover:bg-brand-accent transition-all shadow-2xl shadow-brand-black/10 hover:scale-[1.01] active:scale-[0.99] mt-4">
+                          Transmit Project Brief
+                        </button>
+                      </form>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="success-view"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="text-center py-12 flex flex-col items-center justify-center h-full"
+                    >
+                      <div className="w-20 h-20 bg-brand-black text-brand-accent rounded-full flex items-center justify-center mb-8 shadow-2xl relative">
+                        <motion.div 
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ repeat: Infinity, duration: 2 }}
+                          className="absolute inset-0 bg-brand-accent/20 rounded-full"
+                        />
+                        <ShieldCheck size={40} className="relative z-10" />
+                      </div>
+
+                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-accent mb-3 block">CONNECTION SECURITY PROTOCOL SECURED</span>
+                      <h4 className="text-3xl md:text-4xl font-display font-black text-brand-black uppercase tracking-tighter mb-6 leading-none">Transmission <br />Received.</h4>
+                      
+                      <p className="text-brand-black/60 text-sm font-light leading-relaxed max-w-sm mb-10">
+                        Your project brief has been routed to our <strong className="text-brand-black font-semibold">{regionDetails[selectedRegion].hub}</strong> regional headquarters. An Account Director is auditing your parameters now.
+                      </p>
+
+                      <div className="w-full bg-brand-black/5 rounded-2xl p-6 border border-brand-black/5 text-left mb-8 space-y-4 max-w-sm mx-auto">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-brand-black/40">Next Sequence:</div>
+                        <div className="space-y-3">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+                            <span className="text-xs font-semibold text-brand-black/80">Regional Director allocation (15 mins)</span>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+                            <span className="text-xs font-semibold text-brand-black/80">Feasibility check & specification audit</span>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+                            <span className="text-xs font-semibold text-brand-black/80">Secure line meeting invite via calendar</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button 
+                        onClick={resetModal}
+                        className="px-10 py-4 bg-brand-black text-brand-white rounded-full font-black uppercase tracking-[0.3em] text-[10px] hover:bg-brand-accent transition-all hover:scale-105 active:scale-95"
+                      >
+                        Return to Hub
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>
@@ -912,9 +1173,9 @@ const ProjectModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => voi
 
 const Footer = () => {
   return (
-    <footer className="pt-40 pb-12 bg-brand-white overflow-hidden border-t border-brand-black/5">
+    <footer className="pt-16 md:pt-24 pb-12 bg-brand-white overflow-hidden border-t border-brand-black/5">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-20 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-20 mb-16 md:mb-24">
           <div className="lg:col-span-5">
             <Logo size="lg" className="mb-12" />
             <p className="text-brand-black/60 text-xl leading-relaxed mb-12 max-w-md font-light">
@@ -958,9 +1219,10 @@ const Footer = () => {
           <div className="lg:col-span-3">
             <h4 className="text-[10px] uppercase tracking-[0.5em] font-black text-brand-black mb-10 opacity-40">Studio Hub</h4>
             <p className="text-brand-black/70 mb-8 font-medium leading-relaxed">
-              372 Old Street <br />
-              London EC1V 9LT <br />
-              United Kingdom
+              100 South 5th St <br />
+              Suite 1900 <br />
+              Minneapolis, MN 55402 <br />
+              United States
             </p>
             <div className="relative group">
               <input type="email" placeholder="JOIN THE LIST" className="w-full bg-brand-beige border-none rounded-2xl px-8 py-5 focus:ring-2 focus:ring-brand-accent outline-none transition-all text-[11px] font-black tracking-[0.2em] placeholder:text-brand-black/30" />
@@ -974,7 +1236,7 @@ const Footer = () => {
         <div className="pt-16 border-t border-brand-black/5 flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
           <div className="flex items-baseline space-x-2">
             <span className="text-[10px] uppercase tracking-[0.4em] font-black text-brand-black/40">© 2024 THE DIGIXY LTD.</span>
-            <span className="text-[10px] uppercase tracking-[0.4em] font-black text-brand-accent">CRAFTED IN LONDON.</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] font-black text-brand-accent">CRAFTED IN USA.</span>
           </div>
           <div className="flex space-x-12">
             {['Privacy', 'Terms', 'Cookies'].map(item => (

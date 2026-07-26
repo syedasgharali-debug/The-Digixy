@@ -29,46 +29,112 @@ import {
   Zap,
   Layers,
   Star,
-  Quote
+  Quote,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Cpu,
+  ExternalLink,
+  Calendar
 } from 'lucide-react';
+
+import { WorkDetailsModal, ProjectType } from './components/WorkDetailsModal';
+import { Faq } from './components/Faq';
+import { InteractiveHeroCanvas } from './components/InteractiveHeroCanvas';
+import { BookingModal } from './components/BookingModal';
 
 const Logo = ({ className = "", size = "md" }: { className?: string, size?: 'sm' | 'md' | 'lg' }) => {
   const sizes = {
-    sm: { container: "w-8 h-8", text: "text-lg", theSize: "text-[5px]" },
-    md: { container: "w-10 h-10", text: "text-2xl", theSize: "text-[6px]" },
-    lg: { container: "w-16 h-16", text: "text-5xl", theSize: "text-[10px]" }
+    sm: { container: "w-8 h-8", text: "text-lg", tracker: "tracking-tight", gap: "space-x-2.5", subSize: "text-[5.5px]" },
+    md: { container: "w-10 h-10", text: "text-2xl", tracker: "tracking-tighter", gap: "space-x-3.5", subSize: "text-[7px]" },
+    lg: { container: "w-16 h-16", text: "text-5xl", tracker: "tracking-tighter", gap: "space-x-5", subSize: "text-[10px]" }
   };
   
   const currentSize = sizes[size];
 
   return (
-    <div className={`flex items-center space-x-4 ${className} group cursor-pointer`}>
-      <div className={`relative ${currentSize.container}`}>
-        {/* Architectural Base: Precision cut geometry */}
-        <div className="absolute inset-0 bg-brand-black rounded-tr-[1.5rem] rounded-bl-[0.5rem] group-hover:rounded-tr-[0.5rem] group-hover:rounded-bl-[1.5rem] transition-all duration-700 ease-in-out shadow-2xl" />
-        
-        {/* "THE" Inside Icon */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`${currentSize.theSize} font-display font-black text-brand-white/90 uppercase tracking-widest translate-y-[1px]`}>
-            THE
-          </span>
-        </div>
-        
-        {/* Kinetic Accent */}
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-accent rounded-full border-2 border-brand-beige shadow-lg"
-        />
+    <div className={`flex items-center ${currentSize.gap} ${className} group cursor-pointer`}>
+      {/* Premium Tech-Giant SVG Emblem */}
+      <div className={`relative ${currentSize.container} shrink-0`}>
+        <svg 
+          viewBox="0 0 100 100" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="w-full h-full transform group-hover:scale-105 group-hover:rotate-3 transition-all duration-700 ease-out"
+        >
+          <defs>
+            {/* The Vermilion Spark Gradient - Representing Innovation & Speed */}
+            <linearGradient id="logo-accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff4e00" />
+              <stop offset="50%" stopColor="#ff6a00" />
+              <stop offset="100%" stopColor="#ff1e00" />
+            </linearGradient>
+            
+            {/* The Deep Platinum Gradient - Representing Pure Precision */}
+            <linearGradient id="logo-dark-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#121212" />
+              <stop offset="50%" stopColor="#2c2c2c" />
+              <stop offset="100%" stopColor="#050505" />
+            </linearGradient>
+            
+            {/* Soft Shadow Filter for Interlocking Dimensionality */}
+            <filter id="logo-drop-shadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="3" stdDeviation="2" floodColor="#000000" floodOpacity="0.25" />
+            </filter>
+          </defs>
+          
+          {/* Obsidian Base Ribbon (The 'X' Dimension) */}
+          <motion.path 
+            d="M68 20 L45 20 L25 50 L45 80 L68 80 L48 50 Z" 
+            fill="url(#logo-dark-grad)"
+            className="transition-all duration-700"
+            animate={{ 
+              opacity: [0.95, 1, 0.95],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          {/* Vermilion Overlay Ribbon (The 'D' Dimension - Interlocking perfectly) */}
+          <path 
+            d="M32 20 L55 20 L75 50 L55 80 L32 80 L52 50 Z" 
+            fill="url(#logo-accent-grad)"
+            filter="url(#logo-drop-shadow)"
+          />
+
+          {/* Core Singularity (Center Energy Node) */}
+          <circle 
+            cx="50" 
+            cy="50" 
+            r="4.5" 
+            fill="#ffffff" 
+            className="shadow-inner"
+          />
+          <circle 
+            cx="50" 
+            cy="50" 
+            r="2.5" 
+            fill="#ff4e00" 
+          />
+        </svg>
+
+        {/* Outer Kinetic Pulse */}
+        <span className="absolute -inset-1 rounded-full bg-brand-accent/5 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 pointer-events-none" />
       </div>
       
+      {/* Elegant Typographic Identity */}
       <div className="flex flex-col -space-y-1">
-        <div className={`${currentSize.text} font-display font-black tracking-tighter leading-none uppercase`}>
-          DIGI<span className="text-brand-accent">XY</span>
+        <div className={`${currentSize.text} font-display font-black tracking-tight leading-none uppercase select-none flex items-center`}>
+          <span className="text-brand-black group-hover:text-brand-accent transition-colors duration-500">DIGI</span>
+          <span className="text-brand-accent group-hover:text-brand-black transition-colors duration-500">XY</span>
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-accent ml-1 transform group-hover:scale-150 transition-transform duration-500" />
         </div>
-        <div className="flex items-center space-x-1 mt-1">
-          <div className="h-[1px] w-4 bg-brand-accent/30" />
-          <div className="text-[6px] md:text-[7px] uppercase tracking-[0.5em] font-black text-brand-black/40">
+        <div className="flex items-center space-x-1.5 mt-1.5">
+          <div className="h-[1px] w-5 bg-brand-accent/40" />
+          <div className={`${currentSize.subSize} uppercase tracking-[0.45em] font-black text-brand-black/50`}>
             Global Innovation Studio
           </div>
         </div>
@@ -77,7 +143,7 @@ const Logo = ({ className = "", size = "md" }: { className?: string, size?: 'sm'
   );
 };
 
-const Navbar = ({ onOpenModal }: { onOpenModal: () => void }) => {
+const Navbar = ({ onOpenModal, onOpenBookingModal }: { onOpenModal: () => void, onOpenBookingModal: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -88,13 +154,13 @@ const Navbar = ({ onOpenModal }: { onOpenModal: () => void }) => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-brand-white/95 backdrop-blur-2xl py-4 shadow-2xl shadow-brand-black/5' : 'bg-transparent py-10'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-brand-white/95 backdrop-blur-2xl py-4 shadow-2xl shadow-brand-black/5' : 'bg-transparent py-6 sm:py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <a href="/" className="group">
           <Logo size="md" />
         </a>
         
-        <div className="hidden md:flex items-center space-x-16">
+        <div className="hidden md:flex items-center space-x-12">
           {['Services', 'About', 'Work', 'Blog'].map((item) => (
             <a 
               key={item} 
@@ -106,8 +172,15 @@ const Navbar = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </a>
           ))}
           <button 
+            onClick={onOpenBookingModal}
+            className="px-6 py-3 border border-brand-black text-brand-black hover:bg-brand-black hover:text-brand-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full transition-all duration-300 flex items-center space-x-1.5"
+          >
+            <Calendar size={12} />
+            <span>Schedule Call</span>
+          </button>
+          <button 
             onClick={onOpenModal}
-            className="px-10 py-4 bg-brand-black text-brand-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-brand-accent hover:scale-110 transition-all shadow-2xl shadow-brand-black/20"
+            className="px-8 py-3 bg-brand-black text-brand-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-brand-accent hover:scale-105 transition-all shadow-md shadow-brand-black/10"
           >
             Start a Project
           </button>
@@ -140,9 +213,19 @@ const Navbar = ({ onOpenModal }: { onOpenModal: () => void }) => {
               <button 
                 onClick={() => {
                   setIsMenuOpen(false);
+                  onOpenBookingModal();
+                }}
+                className="w-full py-4 mt-4 border border-brand-black text-brand-black text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-brand-black hover:text-brand-white transition-all text-center flex items-center justify-center space-x-2"
+              >
+                <Calendar size={14} />
+                <span>Schedule Call</span>
+              </button>
+              <button 
+                onClick={() => {
+                  setIsMenuOpen(false);
                   onOpenModal();
                 }}
-                className="w-full py-4 mt-4 bg-brand-black text-brand-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-brand-accent transition-all text-center"
+                className="w-full py-4 bg-brand-black text-brand-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full hover:bg-brand-accent transition-all text-center"
               >
                 Start a Project
               </button>
@@ -172,34 +255,19 @@ const GlobalTrustBadges = () => {
   return (
     <div className="flex flex-wrap gap-2.5 mb-6">
       <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
-        <span className="flex space-x-0.5 items-center">
-          <span className="w-1.5 h-3 bg-[#0A3161] rounded-l-sm" />
-          <span className="w-1 h-3 bg-white" />
-          <span className="w-1.5 h-3 bg-[#B31942] rounded-r-sm" />
-        </span>
+        <span className="text-sm">🇺🇸</span>
         <span>USA HQ</span>
       </span>
       <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
-        <span className="flex space-x-0.5 items-center">
-          <span className="w-1.5 h-3 bg-[#FF0000] rounded-l-sm" />
-          <span className="w-1 h-3 bg-white" />
-          <span className="w-1.5 h-3 bg-[#FF0000] rounded-r-sm" />
-        </span>
+        <span className="text-sm">🇨🇦</span>
         <span>Canada Hub</span>
       </span>
       <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
-        <span className="flex space-x-0.5 items-center">
-          <span className="w-1.5 h-3 bg-[#00247D] rounded-l-sm" />
-          <span className="w-1.5 h-3 bg-white" />
-          <span className="w-1.5 h-3 bg-[#CF142B] rounded-r-sm" />
-        </span>
+        <span className="text-sm">🇬🇧</span>
         <span>United Kingdom Hub</span>
       </span>
       <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-white rounded-full text-[10px] font-bold uppercase tracking-[0.15em] text-brand-black shadow-sm border border-brand-black/5 hover:border-brand-accent/30 hover:shadow-md transition-all duration-300">
-        <span className="flex space-x-0.5 items-center">
-          <span className="w-1.5 h-3 bg-[#00008B] rounded-l-sm" />
-          <span className="w-1.5 h-3 bg-[#FFD700] rounded-r-sm" />
-        </span>
+        <span className="text-sm">🇦🇺</span>
         <span>Australia Hub</span>
       </span>
     </div>
@@ -248,62 +316,107 @@ const GlobalClocks = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-brand-black text-brand-beige rounded-[2rem] border border-brand-white/10 shadow-2xl mb-10 relative overflow-hidden">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 p-5 sm:p-6 bg-brand-black text-brand-beige rounded-[1.5rem] sm:rounded-[2rem] border border-brand-white/10 shadow-2xl mb-10 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none" />
       
       <div className="flex flex-col">
         <div className="flex items-center space-x-2 mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#B31942] animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">Minneapolis, CST</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">🇺🇸 Minneapolis, CST</span>
         </div>
-        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.minneapolis || '05:38 PM'}</span>
+        <span className="text-lg sm:text-xl font-bold tracking-tight font-mono text-brand-white">{times.minneapolis || '05:38 PM'}</span>
       </div>
 
-      <div className="flex flex-col border-t md:border-t-0 md:border-l border-brand-white/10 pt-4 md:pt-0 md:pl-6">
+      <div className="flex flex-col border-t sm:border-t-0 sm:border-l border-brand-white/10 pt-4 sm:pt-0 sm:pl-6">
         <div className="flex items-center space-x-2 mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF0000] animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">Toronto, EST</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">🇨🇦 Toronto, EST</span>
         </div>
-        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.toronto || '06:38 PM'}</span>
+        <span className="text-lg sm:text-xl font-bold tracking-tight font-mono text-brand-white">{times.toronto || '06:38 PM'}</span>
       </div>
 
-      <div className="flex flex-col border-t md:border-t-0 md:border-l border-brand-white/10 pt-4 md:pt-0 md:pl-6">
+      <div className="flex flex-col border-t lg:border-t-0 lg:border-l border-brand-white/10 pt-4 lg:pt-0 lg:pl-6">
         <div className="flex items-center space-x-2 mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#CF142B] animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">London, BST</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">🇬🇧 London, BST</span>
         </div>
-        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.london || '11:38 PM'}</span>
+        <span className="text-lg sm:text-xl font-bold tracking-tight font-mono text-brand-white">{times.london || '11:38 PM'}</span>
       </div>
 
-      <div className="flex flex-col border-t md:border-t-0 md:border-l border-brand-white/10 pt-4 md:pt-0 md:pl-6">
+      <div className="flex flex-col border-t sm:border-t-0 sm:border-l border-brand-white/10 pt-4 sm:pt-0 sm:pl-6">
         <div className="flex items-center space-x-2 mb-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">Sydney, AEST</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-beige/50">🇦🇺 Sydney, AEST</span>
         </div>
-        <span className="text-xl font-bold tracking-tight font-mono text-brand-white">{times.sydney || '08:38 AM'}</span>
+        <span className="text-lg sm:text-xl font-bold tracking-tight font-mono text-brand-white">{times.sydney || '08:38 AM'}</span>
       </div>
     </div>
   );
 };
 
-const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
+const Hero = ({ onOpenModal, onOpenBookingModal }: { onOpenModal: () => void, onOpenBookingModal: () => void }) => {
+  const [canvasMode, setCanvasMode] = useState<'mesh' | 'velocity' | 'ledger'>('mesh');
+
+  // Business-focused demo models matching the interactive canvas projections
+  const telemetryData = {
+    mesh: {
+      title: "Premium Web & Mobile Apps",
+      status: "DEPLOYED",
+      color: "text-brand-accent",
+      metrics: [
+        { label: "User Experience", value: "Optimized & Clean" },
+        { label: "Responsive Scale", value: "Fluid & Fast" },
+        { label: "Load Velocity", value: "Sub-second Speeds" },
+        { label: "Core Technologies", value: "React / Node / Tailwind" }
+      ]
+    },
+    velocity: {
+      title: "AI & Custom Workflows",
+      status: "INTEGRATED",
+      color: "text-green-500",
+      metrics: [
+        { label: "Process Automation", value: "99.8% Efficiency" },
+        { label: "Sync Delay", value: "Real-time Stream" },
+        { label: "Custom AI Models", value: "Tailored Solutions" },
+        { label: "Database Security", value: "Secure Cloud Core" }
+      ]
+    },
+    ledger: {
+      title: "Robust Cloud Architecture",
+      status: "PROTECTED",
+      color: "text-blue-500",
+      metrics: [
+        { label: "Infrastructure", value: "Infinite Auto-Scale" },
+        { label: "Network Protocol", value: "Zero-Trust Security" },
+        { label: "Uptime Standard", value: "99.99% Guaranteed" },
+        { label: "Data Compliance", value: "Fully Encrypted (GDPR)" }
+      ]
+    }
+  };
+
+  const activeTelemetry = telemetryData[canvasMode];
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-24 pb-12 overflow-hidden bg-brand-beige">
-      {/* Sophisticated Background Accents */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-black/[0.02] -skew-x-12 transform origin-top-right" />
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+    <section className="relative min-h-screen flex flex-col justify-center pt-24 sm:pt-28 lg:pt-32 pb-16 overflow-hidden bg-brand-beige">
+      {/* Interactive generative background canvas */}
+      <InteractiveHeroCanvas mode={canvasMode} />
+
+      {/* Grid pattern and lighting overlay */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-black/[0.01] -skew-x-12 transform origin-top-right" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid lg:grid-cols-12 gap-16 items-center">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
           {/* Main Content Area */}
           <div className="lg:col-span-7">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex items-center space-x-4 mb-8"
+              className="flex items-center space-x-4 mb-6"
             >
               <div className="h-[1px] w-12 bg-brand-accent" />
               <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-black/50">
@@ -311,7 +424,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </span>
             </motion.div>
 
-            <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-display font-black tracking-tight leading-[0.9] uppercase mb-10 text-brand-black">
+            <h1 className="text-[clamp(3rem,7.5vw,6rem)] font-display font-black tracking-tight leading-[0.85] uppercase mb-8 text-brand-black">
               <div className="overflow-hidden">
                 <motion.span 
                   initial={{ y: "110%" }}
@@ -319,7 +432,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   className="block"
                 >
-                  Architecting
+                  Engineering
                 </motion.span>
               </div>
               <div className="overflow-hidden">
@@ -329,7 +442,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                   className="block text-brand-accent"
                 >
-                  Digital
+                  High-Performance
                 </motion.span>
               </div>
               <div className="overflow-hidden">
@@ -339,7 +452,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                   className="block"
                 >
-                  Dominance.
+                  Digital Products.
                 </motion.span>
               </div>
             </h1>
@@ -349,10 +462,46 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.4 }}
-                className="text-lg md:text-xl text-brand-black/60 font-light leading-relaxed mb-8 border-l-2 border-brand-accent/20 pl-8"
+                className="text-base md:text-lg text-brand-black/60 font-light leading-relaxed mb-8 border-l-2 border-brand-accent/20 pl-6 sm:pl-8"
               >
-                We deliver high-frequency software ecosystems for enterprise market leaders. Our systems are engineered for infinite scale, absolute security, and architectural permanence.
+                We design, build, and scale premium software for enterprise market leaders and fast-growing businesses. Engineered for ultimate reliability, modern speed, and beautiful design.
               </motion.p>
+
+              {/* Dynamic Projection Controller Hub */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.45 }}
+                className="bg-brand-black/5 p-4 rounded-2xl border border-brand-black/5 mb-8"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-0.5">
+                    <div className="text-[8px] font-black uppercase tracking-[0.25em] text-brand-black/40">PORTFOLIO DEMO</div>
+                    <div className="text-[11px] font-black uppercase tracking-wider text-brand-black flex items-center space-x-1.5">
+                      <Cpu size={12} className="text-brand-accent" />
+                      <span>INTERACTIVE SHOWCASE</span>
+                    </div>
+                  </div>
+
+                  {/* Mode Toggles */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {(['mesh', 'velocity', 'ledger'] as const).map((mode) => (
+                      <button
+                        key={mode}
+                        type="button"
+                        onClick={() => setCanvasMode(mode)}
+                        className={`min-h-[44px] sm:min-h-0 px-4 py-2 sm:py-2.5 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all duration-300 ${
+                          canvasMode === mode
+                            ? 'bg-brand-black text-brand-white shadow-md'
+                            : 'bg-brand-white/50 text-brand-black/50 hover:bg-brand-black/5 hover:text-brand-black'
+                        }`}
+                      >
+                        {mode === 'mesh' ? 'Digital Platforms' : mode === 'velocity' ? 'Workflow Automation' : 'Enterprise Architecture'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -366,94 +515,104 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="flex items-center space-x-8"
+                transition={{ duration: 0.8, delay: 0.55 }}
+                className="mt-8 flex flex-col sm:flex-row gap-4"
               >
                 <button 
-                  onClick={onOpenModal}
-                  className="group relative overflow-hidden bg-brand-black text-brand-beige px-10 py-5 rounded-full transition-all hover:pr-14"
+                  onClick={onOpenBookingModal}
+                  className="group relative overflow-hidden bg-brand-accent text-brand-white px-8 py-4 sm:py-5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center space-x-2.5 min-h-[44px]"
                 >
-                  <span className="relative z-10 text-[11px] font-bold uppercase tracking-widest">Consult Integration</span>
-                  <ArrowUpRight className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all w-5 h-5" />
+                  <Calendar size={14} className="text-brand-white group-hover:scale-110 transition-all duration-300" />
+                  <span className="relative z-10 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] whitespace-nowrap">Schedule Appointment</span>
                 </button>
-                
-                <div className="hidden sm:flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-brand-black/40">
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  <span>Q2 Pipelines Open</span>
-                </div>
+
+                <button 
+                  onClick={onOpenModal}
+                  className="group relative overflow-hidden bg-brand-black text-brand-white px-8 py-4 sm:py-5 rounded-full transition-all hover:bg-brand-black/85 hover:scale-105 active:scale-95 shadow-md flex items-center justify-center min-h-[44px]"
+                >
+                  <span className="relative z-10 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] whitespace-nowrap">Start a Project</span>
+                </button>
               </motion.div>
             </div>
           </div>
 
-          {/* Right Visual Area */}
-          <div className="lg:col-span-5 relative">
+          {/* Right Visual Area: Interactive Telemetry Deck */}
+          <div className="lg:col-span-5 relative w-full max-w-lg mx-auto lg:max-w-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-square bg-brand-black rounded-3xl overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] group"
+              className="relative aspect-square sm:aspect-[4/3] lg:aspect-square bg-brand-black rounded-[2rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.25)] border border-brand-white/10 group flex flex-col justify-between"
             >
+              {/* Backing structural asset image */}
               <img 
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000" 
-                className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" 
-                alt="Global Architecture" 
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-35 grayscale group-hover:scale-105 transition-all duration-[2000ms] ease-out" 
+                alt="Global Architectural Grid" 
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-black via-brand-black/20 to-transparent" />
-              
-              {/* Floating Tech Specs Overlay */}
-              <div className="absolute inset-0 p-12 flex flex-col justify-end">
-                <div className="space-y-6">
-                  <div className="flex justify-between items-end border-b border-brand-white/10 pb-4">
-                    <div>
-                      <div className="text-[10px] font-black text-brand-accent tracking-tighter uppercase mb-1">Infrastructure</div>
-                      <div className="text-brand-white font-display text-xl">Cloud Native</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[10px] font-black text-brand-white/40 tracking-tighter uppercase mb-1">Uptime</div>
-                      <div className="text-brand-white font-display text-xl">99.99%</div>
-                    </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/45 to-transparent pointer-events-none" />
+
+              {/* Header Telemetry bar */}
+              <div className="relative p-6 sm:p-8 flex items-center justify-between border-b border-brand-white/5 bg-brand-black/25 backdrop-blur-sm">
+                <div className="flex items-center space-x-2.5">
+                  <div className={`w-2 h-2 rounded-full bg-brand-accent animate-ping`} />
+                  <span className="text-[10px] font-bold text-brand-white tracking-widest uppercase">
+                    SYS.PROJECTION.LIVE
+                  </span>
+                </div>
+                <div className="px-3 py-1 rounded-full bg-brand-white/10 border border-brand-white/10 text-brand-white text-[9px] font-mono font-black uppercase tracking-widest">
+                  {activeTelemetry.status}
+                </div>
+              </div>
+
+              {/* Dynamic telemetry stats center */}
+              <div className="relative p-6 sm:p-8 space-y-6 flex-grow flex flex-col justify-end">
+                <div className="space-y-1.5">
+                  <div className="text-[9px] font-black uppercase tracking-[0.2em] text-brand-accent">
+                    ACTIVE ENVIRONMENT
                   </div>
-                  <div className="flex justify-between items-end border-b border-brand-white/10 pb-4">
-                    <div>
-                      <div className="text-[10px] font-black text-brand-accent tracking-tighter uppercase mb-1">Engineering</div>
-                      <div className="text-brand-white font-display text-xl">Micro-Core</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[10px] font-black text-brand-white/40 tracking-tighter uppercase mb-1">Integrity</div>
-                      <div className="text-brand-white font-display text-xl">Immutable</div>
-                    </div>
-                  </div>
+                  <h3 className="text-xl sm:text-2xl font-display font-black text-brand-white uppercase tracking-tight">
+                    {activeTelemetry.title}
+                  </h3>
+                </div>
+
+                {/* Multi-grid telemetry outputs */}
+                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-brand-white/10">
+                  <AnimatePresence mode="wait">
+                    {activeTelemetry.metrics.map((metric, idx) => (
+                      <motion.div 
+                        key={`${canvasMode}-${idx}`}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.4, delay: idx * 0.05 }}
+                        className="space-y-0.5"
+                      >
+                        <div className="text-[8px] font-black uppercase tracking-widest text-brand-white/40">
+                          {metric.label}
+                        </div>
+                        <div className="text-sm font-semibold text-brand-beige">
+                          {metric.value}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </div>
               </div>
             </motion.div>
 
-            {/* Floating Metric */}
+            {/* Floating Badge */}
             <motion.div
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }}
-              className="absolute -bottom-10 -left-10 bg-brand-beige border-2 border-brand-black p-8 rounded-2xl shadow-2xl hidden md:block"
+              className="absolute -bottom-6 -left-6 bg-brand-beige border border-brand-black/10 p-5 rounded-2xl shadow-2xl hidden sm:block z-20"
             >
-              <div className="text-4xl font-display font-black text-brand-black tracking-tighter">GLOBAL</div>
-              <div className="text-[9px] font-black uppercase tracking-[0.4em] text-brand-accent">Deployment Standard</div>
+              <div className="text-2xl font-display font-black text-brand-black tracking-tighter">GLOBAL</div>
+              <div className="text-[8px] font-black uppercase tracking-[0.3em] text-brand-accent mt-0.5">Deployment Standard</div>
             </motion.div>
           </div>
-        </div>
-      </div>
 
-      {/* Hero Bottom Strip */}
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-brand-black text-brand-beige flex items-center overflow-hidden">
-        <div className="flex items-center space-x-16 px-6 whitespace-nowrap animate-infinite-scroll">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="flex items-center space-x-4">
-              <span className="text-[9px] font-black uppercase tracking-[0.6em]">Enterprise Grade</span>
-              <div className="w-1 h-1 bg-brand-accent rounded-full" />
-              <span className="text-[9px] font-black uppercase tracking-[0.6em]">Infinite Scalability</span>
-              <div className="w-1 h-1 bg-brand-accent rounded-full" />
-              <span className="text-[9px] font-black uppercase tracking-[0.6em]">Absolute Integrity</span>
-              <div className="w-1 h-1 bg-brand-accent rounded-full" />
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -494,7 +653,7 @@ const Manifesto = () => {
               <div className="absolute inset-0 bg-brand-beige rounded-[60px] rotate-6" />
               <div className="absolute inset-0 bg-brand-black rounded-[60px] -rotate-3 overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 opacity-40">
-                   <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200" alt="Workspace" className="w-full h-full object-cover grayscale" />
+                   <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200" alt="Workspace" className="w-full h-full object-cover object-center grayscale" />
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
@@ -591,44 +750,160 @@ const Services = () => {
   );
 };
 
-const Work = () => {
+const Work = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const [showAll, setShowAll] = useState(false);
-  const allProjects = [
+  const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null);
+
+  const allProjects: ProjectType[] = [
     {
       title: "Global E-commerce Scale",
       client: "Luxe London",
       category: "Digital Growth",
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200"
+      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
+      images: [
+        "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&q=80&w=1200"
+      ],
+      challenge: "Luxe London's legacy platform struggled to handle holiday traffic surges, resulting in severe checkout dropouts and speed spikes. They required a secure, ultra-fast headless storefront.",
+      solution: "We engineered a highly optimized headless storefront with a Next.js/React frontend. We integrated modular APIs, Stripe, and global CDNs to guarantee fast page responses under 0.4 seconds.",
+      techStack: ["Next.js", "GraphQL", "Tailwind CSS", "Shopify API", "Vercel Edge", "Stripe API"],
+      stats: [
+        { value: "+340%", label: "Conversion Rate" },
+        { value: "0.4s", label: "First Contentful Paint" },
+        { value: "$12M+", label: "Sales Processed" }
+      ],
+      feedback: {
+        quote: "The Digixy delivered flawless performance. Our Black Friday traffic spikes had zero latency, transforming our digital brand presence globally.",
+        author: "Victoria Sterling",
+        role: "VP of Digital Commerce",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150"
+      }
     },
     {
       title: "Fintech Brand Identity",
       client: "Sterling Digital",
       category: "Branding",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+      images: [
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&q=80&w=1200"
+      ],
+      challenge: "Sterling Digital was launching a premium banking interface for high-net-worth investors. They required a visual system that inspired absolute prestige, safety, and modern sophistication.",
+      solution: "We crafted a comprehensive corporate branding identity, high-fidelity UI tokens, interactive vector design languages, and motion layouts that define a luxury digital banking experience.",
+      techStack: ["Figma Studio", "After Effects", "Tailwind CSS", "React Motion", "Storybook"],
+      stats: [
+        { value: "100%", label: "System Consistency" },
+        { value: "2.4M", label: "Launch Impressions" },
+        { value: "A+", label: "App Store Audit" }
+      ],
+      feedback: {
+        quote: "Outstanding creative execution. They didn't just design elements; they established a mathematical visual language of high-net-worth luxury.",
+        author: "Marcus Vance",
+        role: "Chief Creative Officer",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"
+      }
     },
     {
       title: "Enterprise SaaS Core",
       client: "NexaFlow",
       category: "Engineering",
-      image: "https://images.unsplash.com/photo-1454165833767-1330084b1f91?auto=format&fit=crop&q=80&w=1200"
+      image: "https://images.unsplash.com/photo-1454165833767-1330084b1f91?auto=format&fit=crop&q=80&w=1200",
+      images: [
+        "https://images.unsplash.com/photo-1454165833767-1330084b1f91?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=1200"
+      ],
+      challenge: "NexaFlow required a modular multi-tenant core platform to sync industrial telemetry data securely from globally distributed sensor grids with sub-millisecond precision.",
+      solution: "We engineered an ultra-resilient Go/Node backend coupled with PostgreSQL clusters. Designed custom pub/sub mechanics, high-throughput pipelines, and responsive React data hubs.",
+      techStack: ["React", "TypeScript", "Node.js", "PostgreSQL", "WebSockets", "Docker"],
+      stats: [
+        { value: "99.99%", label: "System Uptime" },
+        { value: "10x", label: "Telemetry Pipeline Speed" },
+        { value: "Zero", label: "Security Leaks" }
+      ],
+      feedback: {
+        quote: "Our global analytics sync is now bulletproof. The Digixy's engineering team exceeded every rigorous security and speed expectation we established.",
+        author: "Dr. Elena Rostova",
+        role: "VP of Engineering",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150"
+      }
     },
     {
       title: "Real Estate Ecosystem",
       client: "Estate Global",
       category: "Development",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200"
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200",
+      images: [
+        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200"
+      ],
+      challenge: "Estate Global needed to scale their brokerage network with real-time geospatial filtering, interactive map visualization, and offline capability for field brokers.",
+      solution: "We built an optimized Single-Page Application leveraging custom Mapbox SDK layers, offline sync protocols, and automated client-contract generation engines.",
+      techStack: ["React", "Tailwind CSS", "Mapbox GL", "Node.js", "Redis", "PDF Generation"],
+      stats: [
+        { value: "+180%", label: "Broker Engagement" },
+        { value: "1.8s", label: "Interactive Load" },
+        { value: "12", label: "Global Regions Live" }
+      ],
+      feedback: {
+        quote: "Broker onboarding times dropped by 70%. The maps integration is incredibly fluid and has set a new premium benchmark in high-end real estate.",
+        author: "Charles Montgomery",
+        role: "Founder & CEO",
+        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150"
+      }
     },
     {
       title: "Logistics Optimization",
       client: "Rapid Route",
       category: "Software",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200"
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
+      images: [
+        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1519003722824-192514ad74bb?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=1200"
+      ],
+      challenge: "Rapid Route dispatchers spent hours manually plotting and adjusting delivery schedules for over a thousand active heavy vehicles. Stale traffic data compounded delay fees.",
+      solution: "We designed a dynamic, graph-based routing algorithm combined with real-time fleet telematics. The system auto-recalculates routes continuously based on live traffic events.",
+      techStack: ["Go", "React", "WebSockets", "Kafka", "PostGIS", "Leaflet Maps"],
+      stats: [
+        { value: "-22%", label: "Fuel Expenses" },
+        { value: "99.4%", label: "On-Time Dispatch" },
+        { value: "2.1M", label: "Daily Route Updates" }
+      ],
+      feedback: {
+        quote: "A quantum leap for our logistics workflow. Routes are calculated and dispatched instantly, improving fleet efficiency beyond our targets.",
+        author: "Sarah Jenkins",
+        role: "Chief Operating Officer",
+        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150"
+      }
     },
     {
       title: "AI Marketing Engine",
       client: "Vertex AI",
       category: "Innovation",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200"
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
+      images: [
+        "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
+        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1200"
+      ],
+      challenge: "Vertex AI wanted to enable hyper-personalized ad generation matching tailored textual copy directly to automated HTML5 visual canvases on the fly.",
+      solution: "We developed a server-driven generation flow utilizing Gemini LLM parameters integrated with React Canvas rendering and fast cloud asset distribution APIs.",
+      techStack: ["Gemini SDK", "FastAPI", "React Canvas", "Tailwind CSS", "Framer Motion"],
+      stats: [
+        { value: "15x", label: "Ad Iteration Cycle" },
+        { value: "+85%", label: "CTR Increase" },
+        { value: "1.5M", label: "Banners Rendered" }
+      ],
+      feedback: {
+        quote: "Outstanding integration of advanced AI with intuitive canvas UI. It makes complex dynamic asset creation simple and lightning fast.",
+        author: "Alexander Thorne",
+        role: "VP of Product Strategy",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150"
+      }
     }
   ];
 
@@ -660,13 +935,14 @@ const Work = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 viewport={{ once: true }}
+                onClick={() => setSelectedProject(project)}
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-[16/11] overflow-hidden mb-10 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] transition-transform duration-700 group-hover:-translate-y-2">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
+                    className="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-brand-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -710,6 +986,13 @@ const Work = () => {
           </motion.button>
         </div>
       </div>
+
+      <WorkDetailsModal 
+        project={selectedProject}
+        isOpen={selectedProject !== null}
+        onClose={() => setSelectedProject(null)}
+        onOpenProjectModal={onOpenModal}
+      />
     </section>
   );
 };
@@ -738,7 +1021,7 @@ const Philosophy = () => {
           </div>
           <div className="relative group">
             <div className="absolute inset-0 z-0 opacity-20 transition-opacity group-hover:opacity-40 duration-700">
-               <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200" alt="Engineering" className="w-full h-full object-cover rounded-full grayscale" />
+               <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200" alt="Engineering" className="w-full h-full object-cover object-center rounded-full grayscale" />
             </div>
             <div className="aspect-square rounded-full border-[8px] border-brand-white/5 p-20 animate-spin-slow group-hover:border-brand-accent/40 transition-colors duration-1000 relative z-10">
               <div className="w-full h-full rounded-full border-2 border-brand-white/10 border-dashed" />
@@ -1253,23 +1536,26 @@ const Footer = () => {
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <div className="selection:bg-brand-accent selection:text-brand-white">
-      <Navbar onOpenModal={() => setIsModalOpen(true)} />
+      <Navbar onOpenModal={() => setIsModalOpen(true)} onOpenBookingModal={() => setIsBookingOpen(true)} />
       <main>
-        <Hero onOpenModal={() => setIsModalOpen(true)} />
+        <Hero onOpenModal={() => setIsModalOpen(true)} onOpenBookingModal={() => setIsBookingOpen(true)} />
         <Marquee />
         <Services />
         <Manifesto />
         <Philosophy />
-        <Work />
+        <Work onOpenModal={() => setIsModalOpen(true)} />
         <Testimonials />
+        <Faq onOpenModal={() => setIsModalOpen(true)} />
         <Contact />
         <PreFooter onOpenModal={() => setIsModalOpen(true)} />
       </main>
       <Footer />
       <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }

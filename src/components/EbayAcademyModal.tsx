@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, GraduationCap, Video, BookOpen, Award, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import ebayAcademyImg from '../assets/images/ebay_academy_training_1794056318662.jpg';
+
+const DEFAULT_FALLBACK_IMG = "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1200";
 
 interface EbayAcademyModalProps {
   isOpen: boolean;
@@ -81,7 +84,6 @@ export const EbayAcademyModal: React.FC<EbayAcademyModalProps> = ({
             </button>
 
             <div className="grid grid-cols-1 lg:grid-cols-12">
-              {/* Left Column Overview */}
               <div className="lg:col-span-5 bg-brand-black p-8 sm:p-12 text-brand-white flex flex-col justify-between relative overflow-hidden">
                 <div className="relative z-10 space-y-8">
                   <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-brand-accent/20 border border-brand-accent/40 rounded-full text-[9px] font-black uppercase tracking-widest text-brand-accent">
@@ -101,10 +103,14 @@ export const EbayAcademyModal: React.FC<EbayAcademyModalProps> = ({
 
                   <div className="rounded-2xl overflow-hidden border border-brand-white/10 shadow-lg">
                     <img
-                      src="/src/assets/images/ebay_academy_training_1794056318662.jpg"
+                      src={ebayAcademyImg}
                       alt="eBay Digital Marketing Academy"
                       className="w-full h-44 object-cover object-center"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                      }}
                     />
                   </div>
 
@@ -138,7 +144,6 @@ export const EbayAcademyModal: React.FC<EbayAcademyModalProps> = ({
                 </div>
               </div>
 
-              {/* Right Column Curriculum & Inquiry */}
               <div className="lg:col-span-7 p-6 sm:p-10 max-h-[85vh] overflow-y-auto bg-brand-beige">
                 {!submitted ? (
                   <div className="space-y-8">
@@ -159,7 +164,6 @@ export const EbayAcademyModal: React.FC<EbayAcademyModalProps> = ({
                       ))}
                     </div>
 
-                    {/* Enrollment Inquiry Form */}
                     <div className="p-6 bg-brand-white rounded-2xl border border-brand-black/5 shadow-md space-y-4">
                       <div className="text-xs font-black uppercase tracking-widest text-brand-black">Enrollment Inquiry & Seat Reservation</div>
                       <form onSubmit={handleSubmit} className="space-y-3">

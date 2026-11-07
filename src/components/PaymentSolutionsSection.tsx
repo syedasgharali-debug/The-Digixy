@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CreditCard, Globe2, ShieldCheck, CheckCircle2, ArrowRight, HelpCircle, Lock, X } from 'lucide-react';
+import paymentSolutionsImg from '../assets/images/payment_solutions_global_1794056318579.jpg';
+
+const DEFAULT_FALLBACK_IMG = "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=1200";
 
 interface PaymentSolutionsSectionProps {
   onOpenConsultation: () => void;
@@ -56,7 +59,6 @@ export const PaymentSolutionsSection: React.FC<PaymentSolutionsSectionProps> = (
 
   return (
     <section id="payment-solutions" className="py-20 md:py-28 bg-brand-black text-brand-white relative overflow-hidden">
-      {/* Background glow and subtle mesh */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
@@ -97,10 +99,14 @@ export const PaymentSolutionsSection: React.FC<PaymentSolutionsSectionProps> = (
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-[2rem] overflow-hidden border border-brand-white/10 shadow-2xl group">
               <img
-                src="/src/assets/images/payment_solutions_global_1794056318579.jpg"
+                src={paymentSolutionsImg}
                 alt="Global Payment Solutions"
                 className="w-full h-[380px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 p-6 bg-brand-black/80 backdrop-blur-md rounded-2xl border border-brand-white/10">
@@ -112,7 +118,6 @@ export const PaymentSolutionsSection: React.FC<PaymentSolutionsSectionProps> = (
           </div>
         </div>
 
-        {/* Solutions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {solutions.map((item, idx) => (
             <motion.div
@@ -141,7 +146,6 @@ export const PaymentSolutionsSection: React.FC<PaymentSolutionsSectionProps> = (
           ))}
         </div>
 
-        {/* Transparency & Compliance Banner */}
         <div className="p-8 md:p-12 bg-brand-white/5 rounded-[2rem] border border-brand-white/10 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-brand-white/10 pb-6">
             <div>
@@ -164,7 +168,6 @@ export const PaymentSolutionsSection: React.FC<PaymentSolutionsSectionProps> = (
         </div>
       </div>
 
-      {/* Payment Solutions Inquiry Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-6 overflow-y-auto">

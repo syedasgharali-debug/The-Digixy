@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, BookOpen, Clock, Tag, X, User } from 'lucide-react';
 
+import ebaySolutionsImg from '../assets/images/ebay_solutions_showcase_1794056319090.jpg';
+import paymentSolutionsImg from '../assets/images/payment_solutions_global_1794056318579.jpg';
+import aiSaasLabImg from '../assets/images/ai_saas_lab_1794056321118.jpg';
+
+const DEFAULT_FALLBACK_IMG = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200";
+
 interface Article {
   id: string;
   title: string;
@@ -25,7 +31,7 @@ export const BlogSection: React.FC = () => {
       readTime: "6 min read",
       author: "Syed Asghar Kazmi",
       date: "October 2026",
-      image: "/src/assets/images/ebay_solutions_showcase_1794056319090.jpg",
+      image: ebaySolutionsImg,
       summary: "How global market leaders structure eBay seller profiles, optimize for the Cassini search engine, and navigate compliant dropshipping supply chains.",
       content: [
         "eBay remains one of the largest cross-border marketplaces globally, processing tens of billions in annual transaction volume across the US, UK, EU, and Australia.",
@@ -40,7 +46,7 @@ export const BlogSection: React.FC = () => {
       readTime: "5 min read",
       author: "Sarah Jenkins",
       date: "November 2026",
-      image: "/src/assets/images/payment_solutions_global_1794056318579.jpg",
+      image: paymentSolutionsImg,
       summary: "A practical guide for non-US and European digital entrepreneurs seeking compliant cross-border payment merchant options.",
       content: [
         "Expanding globally requires robust payment infrastructure. For international merchants in regions like UAE, Saudi Arabia, or South Asia, accessing tier-1 acquiring channels like Stripe or PayPal Business involves clear legal entity structuring.",
@@ -55,7 +61,7 @@ export const BlogSection: React.FC = () => {
       readTime: "7 min read",
       author: "Elena Rostova",
       date: "November 2026",
-      image: "/src/assets/images/ai_saas_lab_1794056321118.jpg",
+      image: aiSaasLabImg,
       summary: "How modern enterprises deploy custom AI agents, automated workflow pipelines, and neural LLM models to scale support and lead generation.",
       content: [
         "Artificial Intelligence has evolved from generic chatbot widgets into autonomous operational agents capable of qualifying inbound leads, scheduling appointments, and handling complex customer queries.",
@@ -96,6 +102,10 @@ export const BlogSection: React.FC = () => {
                     alt={art.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                    }}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3.5 py-1.5 bg-brand-black text-brand-white rounded-full text-[9px] font-black uppercase tracking-widest">
@@ -133,7 +143,6 @@ export const BlogSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Article Reader Modal */}
       <AnimatePresence>
         {selectedArticle && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-6 overflow-y-auto">
@@ -180,7 +189,15 @@ export const BlogSection: React.FC = () => {
                 </div>
 
                 <div className="rounded-2xl overflow-hidden h-64 border border-brand-black/5">
-                  <img src={selectedArticle.image} alt={selectedArticle.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={selectedArticle.image} 
+                    alt={selectedArticle.title} 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                    }}
+                  />
                 </div>
 
                 <div className="space-y-4 text-sm text-brand-black/80 font-light leading-relaxed">

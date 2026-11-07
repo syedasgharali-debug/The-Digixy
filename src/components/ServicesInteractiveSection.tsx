@@ -15,6 +15,13 @@ import {
   X 
 } from 'lucide-react';
 
+import heroImg from '../assets/images/hero_digital_dominance_1794056318656.jpg';
+import ebaySolutionsImg from '../assets/images/ebay_solutions_showcase_1794056319090.jpg';
+import ebayAcademyImg from '../assets/images/ebay_academy_training_1794056318662.jpg';
+import aiSaasLabImg from '../assets/images/ai_saas_lab_1794056321118.jpg';
+
+const DEFAULT_FALLBACK_IMG = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200";
+
 interface ServicesInteractiveSectionProps {
   onOpenConsultation: () => void;
   onOpenProjectModal: () => void;
@@ -38,7 +45,7 @@ export const serviceCategoriesData: ServiceCategory[] = [
     name: "Digital Marketing",
     shortDesc: "High-ROI paid media campaigns, hyper-targeted lead generation, and performance marketing strategies.",
     icon: <Megaphone className="w-8 h-8 text-brand-accent" />,
-    image: "/src/assets/images/hero_digital_dominance_1794056318656.jpg",
+    image: heroImg,
     subItems: [
       "Social Media Marketing",
       "Facebook & Instagram Advertising",
@@ -88,7 +95,7 @@ export const serviceCategoriesData: ServiceCategory[] = [
     name: "AI & SaaS Development",
     shortDesc: "Custom AI agents, voice bots, workflow automation pipelines, and multi-tenant SaaS application engineering.",
     icon: <Bot className="w-8 h-8 text-brand-accent" />,
-    image: "/src/assets/images/ai_saas_lab_1794056321118.jpg",
+    image: aiSaasLabImg,
     subItems: [
       "AI Application Development",
       "AI Chatbots (Customer Service & Sales)",
@@ -122,7 +129,7 @@ export const serviceCategoriesData: ServiceCategory[] = [
     name: "eBay Business Solutions",
     shortDesc: "End-to-end eBay store setup, seller profile optimization, Cassini SEO, dropshipping guidance, and store management.",
     icon: <ShoppingBag className="w-8 h-8 text-brand-accent" />,
-    image: "/src/assets/images/ebay_solutions_showcase_1794056319090.jpg",
+    image: ebaySolutionsImg,
     subItems: [
       "eBay Seller Account Setup Assistance",
       "eBay Business Consultation",
@@ -140,7 +147,7 @@ export const serviceCategoriesData: ServiceCategory[] = [
     name: "eBay Digital Marketing Academy",
     shortDesc: "1-Month intensive training academy with live online classes, dropshipping fundamentals, SEO, and business mentorship.",
     icon: <GraduationCap className="w-8 h-8 text-brand-accent" />,
-    image: "/src/assets/images/ebay_academy_training_1794056318662.jpg",
+    image: ebayAcademyImg,
     subItems: [
       "One-Month Intensive eBay Training",
       "Live Online Classes & Screen-Shares",
@@ -189,8 +196,6 @@ export const ServicesInteractiveSection: React.FC<ServicesInteractiveSectionProp
   return (
     <section id="services" className="py-20 md:py-32 bg-brand-white text-brand-black relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Header Title */}
         <div className="flex flex-col mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -214,7 +219,6 @@ export const ServicesInteractiveSection: React.FC<ServicesInteractiveSectionProp
           </div>
         </div>
 
-        {/* Filter Navigation Tabs */}
         <div className="flex flex-wrap gap-2 mb-12 p-2 bg-brand-beige rounded-2xl border border-brand-black/5">
           <button
             onClick={() => setActiveTab("all")}
@@ -241,7 +245,6 @@ export const ServicesInteractiveSection: React.FC<ServicesInteractiveSectionProp
           ))}
         </div>
 
-        {/* Services Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {filteredServices.map((service, idx) => (
             <motion.div
@@ -305,7 +308,6 @@ export const ServicesInteractiveSection: React.FC<ServicesInteractiveSectionProp
           ))}
         </div>
 
-        {/* Service Detail Drawer Modal */}
         <AnimatePresence>
           {selectedService && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-6 overflow-y-auto">
@@ -340,7 +342,15 @@ export const ServicesInteractiveSection: React.FC<ServicesInteractiveSectionProp
                     </div>
 
                     <div className="rounded-2xl overflow-hidden border border-brand-white/10 mb-6">
-                      <img src={selectedService.image} alt={selectedService.name} className="w-full h-36 object-cover" />
+                      <img 
+                        src={selectedService.image} 
+                        alt={selectedService.name} 
+                        className="w-full h-36 object-cover" 
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                        }}
+                      />
                     </div>
 
                     <button

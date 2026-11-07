@@ -38,6 +38,12 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
+import heroImg from './assets/images/hero_digital_dominance_1794056318656.jpg';
+import ebaySolutionsImg from './assets/images/ebay_solutions_showcase_1794056319090.jpg';
+import ebayAcademyImg from './assets/images/ebay_academy_training_1794056318662.jpg';
+import paymentSolutionsImg from './assets/images/payment_solutions_global_1794056318579.jpg';
+import aiSaasLabImg from './assets/images/ai_saas_lab_1794056321118.jpg';
+
 import { WorkDetailsModal, ProjectType } from './components/WorkDetailsModal';
 import { Faq } from './components/Faq';
 import { InteractiveHeroCanvas } from './components/InteractiveHeroCanvas';
@@ -48,6 +54,8 @@ import { EbayAcademyModal } from './components/EbayAcademyModal';
 import { PaymentSolutionsSection } from './components/PaymentSolutionsSection';
 import { ServicesInteractiveSection } from './components/ServicesInteractiveSection';
 import { BlogSection } from './components/BlogSection';
+
+const DEFAULT_FALLBACK_IMG = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200";
 
 const Logo = ({ className = "", size = "md" }: { className?: string, size?: 'sm' | 'md' | 'lg' | 'xl' }) => {
   const sizes = {
@@ -61,7 +69,6 @@ const Logo = ({ className = "", size = "md" }: { className?: string, size?: 'sm'
 
   return (
     <div className={`flex items-center ${currentSize.gap} ${className} group cursor-pointer`}>
-      {/* Premium Tech-Giant Fortune 500 SVG Emblem */}
       <div className={`relative ${currentSize.container} shrink-0`}>
         <svg 
           viewBox="0 0 100 100" 
@@ -87,47 +94,27 @@ const Logo = ({ className = "", size = "md" }: { className?: string, size?: 'sm'
             </filter>
           </defs>
           
-          {/* Obsidian Base Ribbon */}
           <motion.path 
             d="M68 20 L45 20 L25 50 L45 80 L68 80 L48 50 Z" 
             fill="url(#logo-dark-grad)"
             className="transition-all duration-700"
-            animate={{ 
-              opacity: [0.95, 1, 0.95],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+            animate={{ opacity: [0.95, 1, 0.95] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           />
           
-          {/* Vermilion Overlay Ribbon */}
           <path 
             d="M32 20 L55 20 L75 50 L55 80 L32 80 L52 50 Z" 
             fill="url(#logo-accent-grad)"
             filter="url(#logo-drop-shadow)"
           />
 
-          {/* Core Energy Node */}
-          <circle 
-            cx="50" 
-            cy="50" 
-            r="4.5" 
-            fill="#ffffff" 
-          />
-          <circle 
-            cx="50" 
-            cy="50" 
-            r="2.5" 
-            fill="#ff4e00" 
-          />
+          <circle cx="50" cy="50" r="4.5" fill="#ffffff" />
+          <circle cx="50" cy="50" r="2.5" fill="#ff4e00" />
         </svg>
 
         <span className="absolute -inset-1 rounded-full bg-brand-accent/10 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 pointer-events-none" />
       </div>
       
-      {/* Brand Wordmark & Tagline */}
       <div className="flex flex-col -space-y-1">
         <div className={`${currentSize.text} font-display font-black tracking-tight leading-none uppercase select-none flex items-center`}>
           <span className="text-brand-black group-hover:text-brand-accent transition-colors duration-500">THE DIGI</span>
@@ -392,7 +379,6 @@ const Hero = ({
 
               <GlobalTrustBadges />
 
-              {/* Mode Toggles */}
               <div className="bg-brand-black/5 p-3 rounded-2xl border border-brand-black/5 mb-8">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="text-[10px] font-black uppercase tracking-wider text-brand-black flex items-center space-x-1.5">
@@ -438,13 +424,16 @@ const Hero = ({
             </div>
           </div>
 
-          {/* Right Visual Area */}
           <div className="lg:col-span-5 relative w-full max-w-lg mx-auto lg:max-w-none">
             <div className="relative aspect-[4/3] sm:aspect-square bg-brand-black rounded-[2.5rem] overflow-hidden shadow-2xl border border-brand-white/10 group flex flex-col justify-between p-8 text-brand-white">
               <img 
-                src="/src/assets/images/hero_digital_dominance_1794056318656.jpg" 
+                src={heroImg} 
                 className="absolute inset-0 w-full h-full object-cover object-center opacity-40 group-hover:scale-105 transition-all duration-700" 
                 alt="The DigiXy Digital Dominance" 
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/50 to-transparent pointer-events-none" />
 
@@ -518,7 +507,15 @@ const Manifesto = () => {
           <div className="lg:col-span-5 relative">
             <div className="relative aspect-square">
               <div className="absolute inset-0 bg-brand-black rounded-[3rem] overflow-hidden shadow-2xl p-8 text-brand-white flex flex-col justify-between">
-                <img src="/src/assets/images/hero_digital_dominance_1794056318656.jpg" alt="The DigiXy Studio" className="absolute inset-0 w-full h-full object-cover grayscale opacity-30" />
+                <img 
+                  src={heroImg} 
+                  alt="The DigiXy Studio" 
+                  className="absolute inset-0 w-full h-full object-cover grayscale opacity-30" 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                  }}
+                />
                 <div className="relative z-10 flex justify-between items-center">
                   <span className="text-[10px] font-black uppercase tracking-widest text-brand-accent">THE DIGIXY PROMISE</span>
                   <CheckCircle2 className="text-brand-accent" size={24} />
@@ -568,9 +565,9 @@ const Work = ({ onOpenModal }: { onOpenModal: () => void }) => {
       title: "eBay Store & Dropshipping Accelerator",
       client: "Global Commerce Group",
       category: "eBay Business Solutions",
-      image: "/src/assets/images/ebay_solutions_showcase_1794056319090.jpg",
+      image: ebaySolutionsImg,
       images: [
-        "/src/assets/images/ebay_solutions_showcase_1794056319090.jpg"
+        ebaySolutionsImg
       ],
       challenge: "Scaling an international eBay seller account while optimizing product listings for eBay Cassini SEO and establishing policy-compliant dropshipping supply chains.",
       solution: "We conducted data-driven product research, optimized store branding, created Cassini-aligned title copy, and implemented automated listing workflows.",
@@ -591,9 +588,9 @@ const Work = ({ onOpenModal }: { onOpenModal: () => void }) => {
       title: "Enterprise AI Voice Agent & SaaS Platform",
       client: "NexaFlow Automation",
       category: "AI & SaaS Development",
-      image: "/src/assets/images/ai_saas_lab_1794056321118.jpg",
+      image: aiSaasLabImg,
       images: [
-        "/src/assets/images/ai_saas_lab_1794056321118.jpg"
+        aiSaasLabImg
       ],
       challenge: "NexaFlow needed an automated AI Voice Agent platform to qualify incoming leads 24/7 and route appointment schedules directly to sales representatives.",
       solution: "We built a custom Python & React SaaS architecture featuring real-time speech transcription, natural language understanding, and automated calendar sync.",
@@ -638,6 +635,10 @@ const Work = ({ onOpenModal }: { onOpenModal: () => void }) => {
                     alt={project.title}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = DEFAULT_FALLBACK_IMG;
+                    }}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3.5 py-1.5 bg-brand-black text-brand-white text-[9px] uppercase tracking-widest font-black rounded-full">
@@ -1056,7 +1057,6 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
           
           <div className="lg:col-span-5">
-            {/* Top-of-the-notch Fortune 500 Style Prominent Logo */}
             <Logo size="lg" className="mb-8" />
             
             <p className="text-brand-black/70 text-base leading-relaxed mb-8 max-w-md font-light">
@@ -1175,7 +1175,6 @@ export default function App() {
 
       <Footer />
 
-      {/* Modals & Quick Action Overlays */}
       <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
       <EbaySolutionsModal 
@@ -1189,7 +1188,6 @@ export default function App() {
         onOpenConsultation={() => setIsBookingOpen(true)} 
       />
 
-      {/* Persistent Floating WhatsApp Quick Contact Button */}
       <WhatsAppButton />
     </div>
   );
